@@ -106,7 +106,7 @@ def _snapshot_to_response(thread_id: str, values: dict) -> GameResponse:
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
-@app.post("/start-game", response_model=GameResponse)
+@app.post("/api/start-game", response_model=GameResponse)
 def start_game(req: StartGameRequest):
     thread_id = str(uuid.uuid4())
     config = _config_for(thread_id)
@@ -133,7 +133,7 @@ def start_game(req: StartGameRequest):
     return _snapshot_to_response(thread_id, snapshot.values)
 
 
-@app.post("/submit-guess", response_model=GameResponse)
+@app.post("/api/submit-guess", response_model=GameResponse)
 def submit_guess(req: SubmitGuessRequest):
     config = _config_for(req.thread_id)
 
@@ -151,7 +151,7 @@ def submit_guess(req: SubmitGuessRequest):
     return _snapshot_to_response(req.thread_id, snapshot.values)
 
 
-@app.get("/game-state/{thread_id}", response_model=GameResponse)
+@app.get("/api/game-state/{thread_id}", response_model=GameResponse)
 def game_state(thread_id: str):
     config = _config_for(thread_id)
     snapshot = riddle_graph.get_state(config)
@@ -160,11 +160,11 @@ def game_state(thread_id: str):
     return _snapshot_to_response(thread_id, snapshot.values)
 
 
-@app.get("/player-score/{player_id}")
+@app.get("/api/player-score/{player_id}")
 def player_score(player_id: str):
     return get_player_score(player_id)
 
 
-@app.get("/health")
+@app.get("/api/health")
 def health():
     return {"status": "ok"}
