@@ -46,11 +46,7 @@ app = FastAPI(title="AI Riddle & Logic Game Master", version="1.0.0")
 # CORS: allow the React client (local dev + Vercel deployment) to call this API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-       "http://localhost:8000", 
-        "http://localhost:5173" # local dev
-       "https://ai-riddle.vercel.app"     
-    ],  # tighten to your deployed frontend origin in production
+    allow_origins=["*"],  # tighten to your deployed frontend origin in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
